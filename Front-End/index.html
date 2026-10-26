@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca Conectada</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- Menu lateral: nome da biblioteca, navegação e acesso da bibliotecária -->
+    <aside class="lateral">
+      <div class="marca">
+        <h1>Biblioteca Conectada</h1>
+        <p>Escola Humberto Lucena</p>
+      </div>
+
+      <!-- As abas com a classe "restrita" só aparecem depois do login. -->
+      <nav class="abas" aria-label="Seções do sistema">
+        <button type="button" class="aba ativa" data-aba="acervo">Acervo</button>
+        <button type="button" class="aba restrita" data-aba="livros" hidden>Livros</button>
+        <button type="button" class="aba restrita" data-aba="leitores" hidden>Leitores</button>
+        <button type="button" class="aba restrita" data-aba="emprestimos" hidden>Empréstimos</button>
+        <button type="button" class="aba restrita" data-aba="conta" hidden>Minha senha</button>
+      </nav>
+
+      <div class="sessao">
+        <span id="indicador-sessao" class="indicador" hidden>Bibliotecária conectada</span>
+        <button type="button" id="btn-entrar" class="secundario claro">Área da bibliotecária</button>
+        <button type="button" id="btn-sair" class="secundario claro" hidden>Sair</button>
+      </div>
+    </aside>
+
+    <div class="conteudo">
+      <main>
+        <!-- Mensagens de sucesso ou erro aparecem aqui -->
+        <p id="aviso" class="aviso" role="status" hidden></p>
+
+        <!-- ============ ACERVO: consulta aberta a todos ============ -->
+        <section id="aba-acervo" class="painel">
+          <h2>Qual livro você procura?</h2>
+
+          <div class="barra-busca">
+            <div class="campo campo-busca">
+              <label for="busca">Buscar por título, autor ou código</label>
+              <input id="busca" type="search" placeholder="Digite aqui para buscar">
+            </div>
+            <div class="campo campo-filtro">
+              <label for="filtro">Mostrar</label>
+              <select id="filtro">
+                <option value="todos">Todos os livros</option>
+                <option value="disponivel">Só disponíveis</option>
+                <option value="emprestado">Só emprestados</option>
+              </select>
+            </div>
+          </div>
+
+          <p id="resumo" class="resumo"></p>
+
+          <div class="tabela-wrap">
+            <table class="tabela-acervo">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Situação</th>
+                  <th>Detalhes</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-acervo"></tbody>
+            </table>
+          </div>
+          <p id="vazio-acervo" class="vazio" hidden></p>
+        </section>
+
+        <!-- ============ LOGIN ============ -->
+        <section id="aba-login" class="painel estreito" hidden>
+          <h2>Área da bibliotecária</h2>
+
+          <form id="form-login" class="formulario" autocomplete="off">
+            <div class="campo">
+              <label for="login-senha">Senha</label>
+              <input id="login-senha" type="password" required autocomplete="current-password">
+            </div>
+            <button type="submit">Entrar</button>
+          </form>
+
+          <p class="dica">
+            Somente a bibliotecária cadastra livros e leitores e registra empréstimos e devoluções.
+            A consulta ao acervo continua aberta a todos. Se esquecer a senha, peça a quem administra
+            o sistema para criar outra pelo servidor.
+          </p>
+        </section>
+
+        <!-- ============ LIVROS: cadastro (restrito) ============ -->
+        <section id="aba-livros" class="painel" hidden>
+          <h2>Cadastrar livro</h2>
+
+          <form id="form-livro" class="formulario" autocomplete="off">
+            <div class="campo">
+              <label for="livro-titulo">Título</label>
+              <input id="livro-titulo" type="text" maxlength="150" required>
+            </div>
+            <div class="campo">
+              <label for="livro-autor">Autor</label>
+              <input id="livro-autor" type="text" maxlength="100" required>
+            </div>
+            <div class="campo">
+              <label for="livro-codigo">Código</label>
+              <input id="livro-codigo" type="text" maxlength="30" required placeholder="Ex.: L-001">
+            </div>
+            <button type="submit">Cadastrar livro</button>
+          </form>
+
+          <h2>Livros cadastrados</h2>
+          <div class="tabela-wrap">
+            <table>
+              <thead>
+                <tr><th>Código</th><th>Título</th><th>Autor</th><th>Ação</th></tr>
+              </thead>
+              <tbody id="corpo-livros"></tbody>
+            </table>
+          </div>
+          <p id="vazio-livros" class="vazio" hidden></p>
+        </section>
+
+        <!-- ============ LEITORES: cadastro (restrito) ============ -->
+        <section id="aba-leitores" class="painel" hidden>
+          <h2>Cadastrar leitor</h2>
+
+          <form id="form-leitor" class="formulario" autocomplete="off">
+            <div class="campo">
+              <label for="leitor-nome">Nome</label>
+              <input id="leitor-nome" type="text" maxlength="100" required>
+            </div>
+            <div class="campo">
+              <label for="leitor-turma">Turma</label>
+              <input id="leitor-turma" type="text" maxlength="30" required placeholder="Ex.: 7º A">
+            </div>
+            <button type="submit">Cadastrar leitor</button>
+          </form>
+
+          <p class="dica">Por respeito à privacidade dos alunos, o sistema guarda apenas nome e turma.</p>
+
+          <h2>Leitores cadastrados</h2>
+          <div class="tabela-wrap">
+            <table>
+              <thead>
+                <tr><th>Nome</th><th>Turma</th><th>Ação</th></tr>
+              </thead>
+              <tbody id="corpo-leitores"></tbody>
+            </table>
+          </div>
+          <p id="vazio-leitores" class="vazio" hidden></p>
+        </section>
+
+        <!-- ============ EMPRÉSTIMOS: registrar e devolver (restrito) ============ -->
+        <section id="aba-emprestimos" class="painel" hidden>
+          <h2>Registrar empréstimo</h2>
+
+          <form id="form-emprestimo" class="formulario">
+            <div class="campo">
+              <label for="emp-leitor">Leitor</label>
+              <select id="emp-leitor" required></select>
+            </div>
+            <div class="campo">
+              <label for="emp-livro">Livro (somente disponíveis)</label>
+              <select id="emp-livro" required></select>
+            </div>
+            <div class="campo">
+              <label for="emp-prevista">Devolução prevista</label>
+              <input id="emp-prevista" type="date" required>
+            </div>
+            <button type="submit">Registrar empréstimo</button>
+          </form>
+
+          <h2>Empréstimos em aberto</h2>
+          <div class="tabela-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Livro</th>
+                  <th>Leitor</th>
+                  <th>Emprestado em</th>
+                  <th>Devolução prevista</th>
+                  <th>Situação</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-abertos"></tbody>
+            </table>
+          </div>
+          <p id="vazio-abertos" class="vazio" hidden></p>
+
+          <h2>Histórico de devoluções</h2>
+          <div class="tabela-wrap">
+            <table>
+              <thead>
+                <tr><th>Livro</th><th>Leitor</th><th>Emprestado em</th><th>Devolvido em</th></tr>
+              </thead>
+              <tbody id="corpo-historico"></tbody>
+            </table>
+          </div>
+          <p id="vazio-historico" class="vazio" hidden></p>
+        </section>
+
+        <!-- ============ MINHA SENHA: alterar (restrito) ============ -->
+        <section id="aba-conta" class="painel estreito" hidden>
+          <h2>Alterar senha</h2>
+
+          <form id="form-alterar-senha" class="formulario" autocomplete="off">
+            <div class="campo">
+              <label for="senha-atual">Senha atual</label>
+              <input id="senha-atual" type="password" required autocomplete="current-password">
+            </div>
+            <div class="campo">
+              <label for="senha-nova">Nova senha (mínimo de 6 caracteres)</label>
+              <input id="senha-nova" type="password" required minlength="6" autocomplete="new-password">
+            </div>
+            <div class="campo">
+              <label for="senha-nova2">Repita a nova senha</label>
+              <input id="senha-nova2" type="password" required minlength="6" autocomplete="new-password">
+            </div>
+            <button type="submit">Alterar senha</button>
+          </form>
+        </section>
+      </main>
+
+      <footer class="rodape">
+        Projeto de extensão, Análise e Desenvolvimento de Sistemas. Os dados ficam salvos no servidor da biblioteca.
+      </footer>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

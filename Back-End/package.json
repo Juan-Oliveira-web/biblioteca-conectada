@@ -1,0 +1,14 @@
+{
+  "name": "biblioteca-conectada",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Back-end da Biblioteca Conectada (Escola Humberto Lucena)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "criar-senha": "node server.js criar-senha"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
