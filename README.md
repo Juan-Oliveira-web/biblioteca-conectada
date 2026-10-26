@@ -130,4 +130,4 @@ Todas as respostas são JSON. Em caso de erro, o corpo tem o formato `{ "erro": 
 
 Projeto de extensão em grupo, curso de Análise e Desenvolvimento de Sistemas.
 
-Autores: (preencher com os nomes dos integrantes)
+Autores: (Juan Pablo Oliveira Figueiredo , Andre Luiz Dias Lima Vidal,Carlos Eduardo dos Santos Sousa,Isaque José de Sousa Arcenio,Nathan Leal)
